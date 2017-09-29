@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, shrink-to-fit=no, initial-scale=1">
+    <link href="../resources/css/bootstrap.css" rel="stylesheet" />
+    <script src="../resources/scripts/jquery.js"></script>
+    <script src="../resources/scripts/popper.min.js"></script>
+    <script src="../resources/scripts/bootstrap.js"></script>
+    <link href="../resources/css/custom.css" rel="stylesheet" />
+    <style>
+        .background-image{
+            background:url('../resources/images/main food1.jpg') center center no-repeat fixed;
+            background-size:cover;
+            background-color:lightgreen;
+        }
+    </style>
+</head>
+<body class="background-image">
+    <nav class="navbar fixed-top navbar-expand-sm navbar-dark bg-success">
+        <a class="appTitle" href="#">More-Recipes</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navBody" aria-controls="navBody" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse collapsible" id="navBody">
+            <ul class="navbar-nav my-2 my-lg-0 ml-auto">
+                <li class="nav-item nav-social">
+                    <a class="nav-link" href="#">
+                        <img src="../resources/images/glyphicons-social-3-google-plus.png" />
+                    </a>
+                </li>
+                <li class="nav-item nav-social">
+                    <a class="nav-link" href="#">
+                        <img src="../resources/images/glyphicons-social-31-facebook.png" />
+                    </a>
+                </li>
+                <li class="nav-item nav-social">
+                    <a class="nav-link" href="#">
+                        <img src="../resources/images/glyphicons-social-32-twitter.png" />
+                    </a>
+                </li>
+                <li class="nav-item nav-social">
+                    <a class="nav-link" href="#">
+                        <img src="../resources/images/glyphicons-social-6-blogger.png" />
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="mx-sm-auto col-sm-6">
+            <form role="form" action="../Login.html" class="formDiv">
+                <h3 class="appTitle text-center">Register</h3>
+                <br />
+                <input type="text" name="country" placeholder="Enter your country" required class="form-control input-lg lineSpacing" value="" />
+                <input type="email" class="form-control input-lg lineSpacing" id="email" placeholder="Enter your email" required value="" />
+                <input type="text" name="username" placeholder="Username" required class="form-control input-lg lineSpacing" value="" />
+                <input type="password" class="form-control input-lg lineSpacing" id="password" placeholder="Password" required value="" />
+                <input type="password" class="form-control input-lg lineSpacing" id="confirmPassword" placeholder="Confirm Password" required value="" />
+                <button type="submit" id="complete" class="btn btn-lg btn-primary btn-block submitButton">Sign Up</button>
+                <div class="form-links">
+                    <a href="../Login.html">Already a user? Signin</a> | <a href="#" data-toggle="modal" data-target="#resetPassword">reset password</a>
+                </div>
+            </form>
+            <!-- Modal -->
+            <div class="modal fade" id="resetPassword" tabindex="-1" role="dialog" aria-labelledby="resetPasswordLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header modal-theme">
+                            <h5 class="modal-title" id="resetPasswordLabel">Recover Password</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body  text-center">
+                            <h2>Forgot Password?</h2>
+                            <p>You can reset your password here.</p>
+                            <form class="form">
+                                <fieldset>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input id="emailInput" placeholder="email address" class="form-control email-input" required type="email">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="btn btn-lg btn-primary btn-block modal-theme send-password" value="Send My Password" type="submit">
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                        <div class="modal-footer modal-theme">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            <!--<button type="button" class="btn btn-primary">Send Password</button>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../resources/scripts/app.js"></script>
+</body>
+</html>
