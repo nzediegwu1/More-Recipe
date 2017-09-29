@@ -1,4 +1,4 @@
-﻿import recipes from '../models/recipes.js';
+import recipes from '../models/recipes.js';
 class RecipesController {
     getAllRecipes(req, res) {
         try {
@@ -83,6 +83,5 @@ class RecipesController {
             console.log(e);
         }
     }
-
 }
 export default RecipesController;
