@@ -1,4 +1,4 @@
-﻿const recipes = [
+const recipes = [
     {
         title: 'Okro Soup',
         Ingredient: ['pepper', 'salt', 'red oil', 'okro'],
@@ -35,4 +35,4 @@
         upvotes: 67,
     },
 ];
-module.exports = recipes;
+export default recipes;

@@ -1,4 +1,4 @@
-﻿import express from 'express';
+import express from 'express';
 const router = express.Router();
 import RecipesController from '../controllers/recipes.js';
 
@@ -10,4 +10,5 @@ router.post('/', recipes.postRecipe);
 router.put('/:id', recipes.updateRecipe);
 router.delete('/:id', recipes.deleteRecipe);
 router.post('/:id/reviews', recipes.postReview);
-module.exports = router;
+
+export default router;

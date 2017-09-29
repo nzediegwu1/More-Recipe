@@ -7,24 +7,24 @@ class RecipesController {
             // query string must contain sort='upvote'
             // before the sort is considered
             if (sort !== 'upvote') {
-                return res.json({ all_recipes: recipes });
+                return res.status(200).json({ all_recipes: recipes });
                 // if sort=upvote and order=des
             } else if (order === 'des') {
                 recipes.sort((a, b) => b.upvotes - a.upvotes);
-                return res.json({ sortedUpvotes_Des: recipes });
+                return res.status(200).json({ sortedUpvotes_Des: recipes })
                 // if sort=upvote and order=asc
             } else if (order === 'asc') {
                 recipes.sort((a, b) => a.upvotes - b.upvotes);
-                return res.json({ sortedUpvotes_Asc: recipes });
+                return res.status(200).json({ sortedUpvotes_Asc: recipes });
             }
-            return res.json({ response: 'invalid sort parameter' });
+            return res.status(400).json({ response: 'invalid sort parameter' });
         } catch (e) {
             console.log(e);
         }
     }
     getRecipe(req, res) {
         try {
-            return res.json(recipes[req.params.id]);
+            return res.status(200).json(recipes[req.params.id]);
         } catch (e) {
             console.log(e);
         }
@@ -34,9 +34,9 @@ class RecipesController {
             // write further check for recipe data format later
             // before allowing posting of new recipe later
             recipes.push(req.body);
-            return res.json({ success: 'Successfully posted new item' });
+            return res.status(201).json({ success: 'Successfully posted new item' });
         } catch (e) {
-            return res.json({ failure: 'Unable to post new recipe' });
+            return res.status(500).json({ failure: 'Unable to post new recipe' });
         }
     }
     updateRecipe(req, res) {
@@ -45,10 +45,10 @@ class RecipesController {
             for (let i = 0; i < recipes.length; i++) {
                 if (i === parseInt(req.params.id)) {
                     recipes[i] = req.body;
-                    return res.json({ result: 'successful' });
+                    return res.status(200).json({ result: 'successful' });
                 }
             }
-            return res.json({ unsuccessful: 'Error updating recipe' });
+            return res.status(404).json({ unsuccessful: 'Error updating recipe' });
         } catch (e) {
             // log error to prevent program crashing
             console.log(e);
@@ -60,10 +60,10 @@ class RecipesController {
             for (let recipeItem = 0; recipeItem < recipes.length; recipeItem++) {
                 if (recipeItem === parseInt(req.params.id)) {
                     delete recipes[recipeItem];
-                    return res.json({ result: 'Delete successful' });
+                    return res.status(204).json({ result: 'Delete successful' });
                 }
             }
-            return res.json({ unsuccessful: 'Error deleting recipe' });
+            return res.status(404).json({ unsuccessful: 'Error deleting recipe' });
         } catch (e) {
             console.log(e);
         }
@@ -75,10 +75,10 @@ class RecipesController {
             for (let recipeItem = 0; recipeItem < recipes.length; recipeItem++) {
                 if (recipeItem === parseInt(req.params.id)) {
                     recipes[recipeItem].reviews.push(req.body);
-                    return res.json({ result: 'Successfully Added Review' });
+                    return res.status(201).json({ result: 'Successfully Added Review' });
                 }
             }
-            return res.json({ unsuccessful: 'Error Adding review' });
+            return res.status(500).json({ unsuccessful: 'Error Adding review' });
         } catch (e) {
             console.log(e);
         }
