@@ -68,5 +68,20 @@ class RecipesController {
             console.log(e);
         }
     }
+    postReview(req, res) {
+        try {
+            // get recipe where index is same as id parameter
+            // and append req.body to its review array
+            for (let recipeItem = 0; recipeItem < recipes.length; recipeItem++) {
+                if (recipeItem === parseInt(req.params.id)) {
+                    recipes[recipeItem].reviews.push(req.body);
+                    return res.json({ result: 'Successfully Added Review' });
+                }
+            }
+            return res.json({ unsuccessful: 'Error Adding review' });
+        } catch (e) {
+            console.log(e);
+        }
+    }
 }
 export default RecipesController;
