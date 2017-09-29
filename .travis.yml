@@ -3,8 +3,8 @@ node_js:
   - "stable"
 cache:
   directories:
-  - node_modules
+  - server/node_modules
 script:
-  - npm run coverage
-after_success: 'npm run coveralls'
+  - npm run server/coverage
+after_success: 'npm run server/coveralls'
   
