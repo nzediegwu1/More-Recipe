@@ -2,6 +2,4 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/Web.config
-/more_recipes.sln
-/.vs
+/node_modules
