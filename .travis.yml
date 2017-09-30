@@ -1,10 +1,11 @@
 language: node_js
 node_js:
-  - "stable"
-cache:
-  directories:
-  - node_modules
+- "stable"
+env:
+ global:
+   - export NODE_ENV=test
 script:
-  - npm run coverage
+- npm test
+- npm run coverage
+- npm install
 after_success: 'npm run coveralls'
-  

@@ -1,4 +1,4 @@
-import recipes from '../models/recipes.js';
+﻿import recipes from '../models/recipes.js';
 class RecipesController {
     getAllRecipes(req, res) {
         try {
@@ -11,7 +11,7 @@ class RecipesController {
                 // if sort=upvote and order=des
             } else if (order === 'des') {
                 recipes.sort((a, b) => b.upvotes - a.upvotes);
-                return res.status(200).json({ sortedUpvotes_Des: recipes })
+                return res.status(200).json({ sortedUpvotes_Des: recipes });
                 // if sort=upvote and order=asc
             } else if (order === 'asc') {
                 recipes.sort((a, b) => a.upvotes - b.upvotes);
