@@ -25,5 +25,6 @@ import app from '../app';
                  res.should.be.a('object');
                  done();
              });
-     });*/
+     });
 });
+*/
