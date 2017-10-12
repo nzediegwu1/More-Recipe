@@ -3,3 +3,10 @@
 ################################################################################
 
 /server/.vs
+/.vs
+/server/bin/Microsoft.NodejsTools.WebRole.dll
+/server/obj/Debug
+/server/typings
+/node_modules
+/Web.config
+/more_recipes.sln
