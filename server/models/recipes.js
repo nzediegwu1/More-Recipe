@@ -1,38 +1,17 @@
-﻿const recipes = [
-    {
-        title: 'Okro Soup',
-        Ingredient: ['pepper', 'salt', 'red oil', 'okro'],
-        description: 'Cook the food same way you cook egusi',
-        reviews: [],
-        upvotes: 67,
-    },
-    {
-        title: 'Egusi Soup',
-        Ingredient: ['pepper', 'salt', 'groundnut oil', 'egusi'],
-        description: 'Cook the food same way you cook okro',
-        reviews: [],
-        upvotes: 228,
-    },
-    {
-        title: 'jellof Soup',
-        Ingredient: ['pepper', 'groundnut oil', 'salt', 'rice', 'fish'],
-        description: 'Cook the food same way you cook fried rice',
-        reviews: [],
-        upvotes: 52,
-    },
-    {
-        title: 'Spaghetti',
-        Ingredient: ['pepper', 'groundnut oil', 'maggi', 'beans'],
-        description: 'Cook the food same way you cook maccroni',
-        reviews: [],
-        upvotes: 234,
-    },
-    {
-        title: 'jellof Soup',
-        Ingredient: ['pepper', 'groundnut oil', 'salt', 'rice', 'fish'],
-        description: 'Cook the food same way you cook fried rice',
-        reviews: [],
-        upvotes: 67,
-    },
-];
-export default recipes;
+module.exports = (sequelize, DataTypes) => {
+    const Recipes = sequelize.define('Recipes', {
+        title: DataTypes.STRING,
+        ingredients: DataTypes.STRING,
+        description: DataTypes.TEXT,
+        upvotes: DataTypes.INTEGER,
+        downvotes: DataTypes.INTEGER,
+        // add this or fk going to db will be null
+        UserId: DataTypes.INTEGER,
+    });
+    Recipes.associate = (models) => {
+        // associations can be defined here
+        Recipes.belongsTo(models.Users);
+        Recipes.hasMany(models.Reviews);
+    };
+    return Recipes;
+};
