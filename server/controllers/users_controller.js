@@ -16,11 +16,9 @@ class Users {
                 .then(members => {
                     if (Object.keys(members).length !== 0) {
                         for (let item in members) {
-                            if (members[item].username === req.body.username
-                                || members[item].email === req.body.email) {
+                            if (members[item].username === req.body.username || members[item].email === req.body.email) {
                                 // forbidden
-                                return res.status(403)
-                                    .json({ error: { message: 'User already exists' } });
+                                res.status(403).json({ error: { message: 'User already exists' } });
                             }
                         }
                     }
@@ -30,8 +28,7 @@ class Users {
                         username: req.body.username,
                         email: req.body.email,
                         password: bcrypt.hashSync(req.body.password, 10) })
-                        .then((createdUser) => res.status(201)
-                        .json({ success: { status: createdUser } }));
+                        .then((createdUser) => res.status(201).json({ success: { status: createdUser } }));
                 })
                 .catch(error => res.status(500).json({ error: { message: error } }));
         }
@@ -61,7 +58,7 @@ class Users {
         // gets all users' details excluding password
         return models.Users.findAll({ attributes: { exclude: ['password'] } })
             .then(allusers => res.status(200).json({ success: { status: allusers } }))
-            .catch(error => res.status(401).json({ error: { message: 'Unauthorized' } }));
+            .catch(error => res.status(500).json({ error: { message: error } }));
     }
 }
 

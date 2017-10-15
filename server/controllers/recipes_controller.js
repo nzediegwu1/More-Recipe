@@ -12,7 +12,10 @@ class RecipesController {
         if (sort !== 'upvote') {
             return models.Recipes.findAll({ include: [models.Reviews] })
                 .then((allRecipes) => {
-                    res.status(200).json({ success: { status: allRecipes } });
+                    if (allRecipes) {
+                        res.status(200).json({ success: { status: allRecipes } });
+                    }
+                    res.status(404).json({ error: { message: 'No Recipe found' } });
                 })
                 .catch(error => res.status(500).json({ error: { message: error } }));
             // if sort=upvote and order=des
@@ -22,7 +25,10 @@ class RecipesController {
                 include: [models.Reviews],
             })
                 .then((allRecipes) => {
-                    res.status(200).json({ success: { status: allRecipes } });
+                    if (allRecipes) {
+                        res.status(200).json({ success: { status: allRecipes } });
+                    }
+                    res.status(404).json({ error: { message: 'No Recipe found' } });
                 })
                 .catch(error => res.status(500).json({ error: { message: error } }));
             // if sort=upvote and order=asc
@@ -32,18 +38,26 @@ class RecipesController {
                 include: [models.Reviews],
             })
                 .then((allRecipes) => {
-                    res.status(200).json({ success: { status: allRecipes } });
+                    if (allRecipes) {
+                        res.status(200).json({ success: { status: allRecipes } });
+                    }
+                    res.status(404).json({ error: { message: 'No Recipe found' } });
                 })
                 .catch(error => res.status(500).json({ error: { message: error } }));
         }
-        res.status(400).json({ error: { message: 'invalid sort parameter' } });
+        return res.status(400).json({ error: { message: 'invalid sort parameter' } });
     }
     getRecipe(req, res) {
         const check = validator.confirmParams(req, res);
         if (check) {
             return models.Recipes.findById(req.params.id, { include: [models.Reviews] })
-            .then(recipe => res.status(200).json({ success: { status: recipe } }))
-            .catch(error => res.status(400).json({ error: { message: error } }));
+            .then(recipe => {
+                if (recipe) {
+                    res.status(200).json({ success: { status: recipe } });
+                }
+                res.status(404).json({ error: { message: 'Could not find Recipe' } });
+            })
+            .catch(error => res.status(500).json({ error: { message: error } }));
         }
         return validator.invalidParameter;
     }
@@ -79,11 +93,11 @@ class RecipesController {
                 }, { where: { id: req.params.id, UserId: req.decoded.id } })
                         .then(updatedRecipe => {
                             if (updatedRecipe[0] === 1) {
-                                return res.status(200).json({ success: { status: 'Update successful' } });
+                                res.status(200).json({ success: { status: 'Update successful' } });
                             }
-                            return res.status(404).json({ error: { message: 'Cannot modify recipe' } });
+                            res.status(404).json({ error: { message: 'Recipe does not exist' } });
                         })
-                        .catch(error => res.status(404).json({ error: { message: error } }));
+                        .catch(error => res.status(500).json({ error: { message: error } }));
             }
             return validator.verificationError;
         }
@@ -96,9 +110,9 @@ class RecipesController {
             return models.Recipes.destroy({ where: { id: req.params.id, UserId: req.decoded.id } })
                 .then(destroyed => {
                     if (destroyed) {
-                        return res.status(204).json({ success: { status: 'Successfully deleted' } });
+                        res.status(204).json({ success: { status: 'Successfully deleted' } });
                     }
-                    return res.status(404).json({ error: { message: 'No recipe deleted' } });
+                    res.status(404).json({ error: { message: 'No recipe deleted' } });
                 })
                 .catch(error => res.status(500).json({ error: { message: error } }));
         }

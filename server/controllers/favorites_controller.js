@@ -19,8 +19,13 @@ class Favorites {
     getFavorites(req, res) {
         // req.params.UserId is mere formality since not to be used for security reasons
         return models.Favorites.findAll({ where: { UserId: req.decoded.id } })
-        .then(favoriteRecipes => res.status(200).json({ success: { status: favoriteRecipes } }))
-        .catch(error => res.status(401).json({ error: { message: error } }));
+        .then(favoriteRecipes => {
+            if (favoriteRecipes) {
+                res.status(200).json({ success: { status: favoriteRecipes } });
+            }
+            res.status(404).json({ error: { message: 'No favorite recipes found' } });
+        })
+        .catch(error => res.status(500).json({ error: { message: error } }));
     }
 }
 

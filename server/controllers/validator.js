@@ -45,21 +45,17 @@
                                     return this.success;
                                 }
                                 this.verificationError = this.errorMessage('Recipe content must be text', res);
-                                return this.verificationError;
                             }
                             this.verificationError = this.errorMessage('Recipe ingredients must be text', res);
-                            return this.verificationError;
                         }
                         this.verificationError = this.errorMessage('Recipe title must be text', res);
-                        return this.verificationError;
                     }
                     this.verificationError = this.errorMessage('Recipe has no content', res);
-                    return this.verificationError;
                 }
                 this.verificationError = this.errorMessage('Recipe has no ingredient', res);
-                return this.verificationError;
+            } else {
+                this.verificationError = this.errorMessage('Recipe has no title', res);
             }
-            this.verificationError = this.errorMessage('Recipe has no title', res);
             return this.verificationError;
         };
         this.userVerifier = (req, res, context) => {
@@ -78,15 +74,13 @@
                         }
                         const message = 'Password must be text of 6 digits or higher';
                         this.verificationError = this.errorMessage(message, res);
-                        return this.verificationError;
                     }
                     this.verificationError = this.errorMessage('Username must be text', res);
-                    return this.verificationError;
                 }
                 this.verificationError = this.errorMessage('Please enter password', res);
-                return this.verificationError;
+            } else {
+                this.verificationError = this.errorMessage('Please enter username', res);
             }
-            this.verificationError = this.errorMessage('Please enter username', res);
             return this.verificationError;
         };
         this.signupVerifier = (req, res) => {
@@ -103,34 +97,27 @@
                                         }
                                         const message = 'Password must be text of 6 digits or higher';
                                         this.verificationError = this.errorMessage(message, res);
-                                        return this.verificationError;
                                     }
                                     this.verificationError = this.errorMessage('Email must be text', res);
-                                    return this.verificationError;
                                 }
                                 this.verificationError = this.errorMessage('Fullname must be text', res);
-                                return this.verificationError;
                             }
                             this.verificationError = this.errorMessage('Username must be text', res);
-                            return this.verificationError;
                         }
                         this.verificationError = this.errorMessage('Please enter your password', res);
-                        return this.verificationError;
                     }
                     this.verificationError = this.errorMessage('Please enter your email', res);
-                    return this.verificationError;
                 }
                 this.verificationError = this.errorMessage('Please enter your fullname', res);
-                return this.verificationError;
+            } else {
+                this.verificationError = this.errorMessage('Please enter username', res);
             }
-            this.verificationError = this.errorMessage('Please enter username', res);
             return this.verificationError;
         };
         this.favoriteVerifier = (req, res) => {
             if (req.body.RecipeId !== undefined) {
                 if (isNaN(req.body.RecipeId)) {
                     this.verificationError = this.errorMessage('RecipeId must be a number', res);
-                    return this.verificationError;
                 }
                 this.success = true;
                 return this.success;
@@ -145,9 +132,9 @@
                     return this.success;
                 }
                 this.verificationError = this.errorMessage('Review content must be text', res);
-                return this.verificationError;
+            } else {
+                this.verificationError = this.errorMessage('No Review content', res);
             }
-            this.verificationError = this.errorMessage('No Review content', res);
             return this.verificationError;
         };
     }
