@@ -15,8 +15,13 @@ $(document).ready(() => {
         $('#recipeName').val('African Royal Dish');
         $('#ingredients').val('Oil, Beans, Potato, Plantain, Maggi, Vegetable');
         $('#description').val(description);
+        $('#save').show();
+        $('#create').hide();
     });
-
+    $('#create').click(() => {
+        $('#save').hide();
+        $('#create').show();
+    });
     $('#createRecipe').click(() => {
         $('#modalTitle').text('Create Recipe');
         $('#recipeName,#ingredients,#description').val('');

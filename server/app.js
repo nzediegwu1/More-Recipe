@@ -10,8 +10,13 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../template')));
+
 
 app.use('/api/v1/recipes', recipes);
 app.use('/api/v1/users', users);
+app.use('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../template', 'Login.html'));
+});
 
 export default app;
