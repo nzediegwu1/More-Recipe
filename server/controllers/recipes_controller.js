@@ -2,62 +2,50 @@
 import val from './validator';
 
 const validator = new val('recipes');
-
 class RecipesController {
     getAllRecipes(req, res) {
         const sort = req.query.sort;
         const order = req.query.order;
+        const action = (data) => {
+            if (data.length !== 0) {
+                return validator.response(res, 'success', 200, data);
+            }
+            return validator.response(res, 'error', 404, 'No Recipe found');
+        };
         // query string must contain sort='upvote'
         // before the sort is considered
         if (sort !== 'upvote') {
             return models.Recipes.findAll({ include: [models.Reviews] })
-                .then((allRecipes) => {
-                    if (allRecipes) {
-                        res.status(200).json({ success: { status: allRecipes } });
-                    }
-                    res.status(404).json({ error: { message: 'No Recipe found' } });
-                })
-                .catch(error => res.status(500).json({ error: { message: error } }));
+                .then(allRecipes => action(allRecipes))
+                .catch(error => validator.response(res, 'error', 500, error));
             // if sort=upvote and order=des
         } else if (order === 'des') {
             return models.Recipes.findAll({
                 order: [['upvotes', 'DESC']],
                 include: [models.Reviews],
-            })
-                .then((allRecipes) => {
-                    if (allRecipes) {
-                        res.status(200).json({ success: { status: allRecipes } });
-                    }
-                    res.status(404).json({ error: { message: 'No Recipe found' } });
-                })
-                .catch(error => res.status(500).json({ error: { message: error } }));
+            }).then(allRecipes => action(allRecipes))
+            .catch(error => validator.response(res, 'error', 500, error));
             // if sort=upvote and order=asc
         } else if (order === 'asc') {
             return models.Recipes.findAll({
                 order: [['upvotes', 'ASC']],
                 include: [models.Reviews],
-            })
-                .then((allRecipes) => {
-                    if (allRecipes) {
-                        res.status(200).json({ success: { status: allRecipes } });
-                    }
-                    res.status(404).json({ error: { message: 'No Recipe found' } });
-                })
-                .catch(error => res.status(500).json({ error: { message: error } }));
+            }).then(allRecipes => action(allRecipes))
+            .catch(error => validator.response(res, 'error', 500, error));
         }
-        return res.status(400).json({ error: { message: 'invalid sort parameter' } });
+        return validator.response(res, 'err', 400, 'invalid sort parameter');
     }
     getRecipe(req, res) {
         const check = validator.confirmParams(req, res);
         if (check) {
             return models.Recipes.findById(req.params.id, { include: [models.Reviews] })
             .then(recipe => {
-                if (recipe) {
-                    res.status(200).json({ success: { status: recipe } });
+                if (recipe.length !== 0) {
+                    return validator.response(res, 'success', 200, recipe);
                 }
-                res.status(404).json({ error: { message: 'Could not find Recipe' } });
+                return validator.response(res, 'error', 404, 'Could not find Recipe');
             })
-            .catch(error => res.status(500).json({ error: { message: error } }));
+            .catch(error => validator.response(res, 'error', 500, error));
         }
         return validator.invalidParameter;
     }
@@ -72,8 +60,8 @@ class RecipesController {
                 downvotes: req.body.downvotes,
                 UserId: req.decoded.id,
             })
-         .then(created => res.status(200).json({ success: { status: created } }))
-         .catch(error => res.status(500).json({ error: { message: error } }));
+         .then(created => validator.response(res, 'success', 200, created))
+         .catch(error => validator.response(res, 'error', 500, error));
         }
         return validator.verificationError;
     }
@@ -93,11 +81,11 @@ class RecipesController {
                 }, { where: { id: req.params.id, UserId: req.decoded.id } })
                         .then(updatedRecipe => {
                             if (updatedRecipe[0] === 1) {
-                                res.status(200).json({ success: { status: 'Update successful' } });
+                                return validator.response(res, 'success', 200, 'Update successful');
                             }
-                            res.status(404).json({ error: { message: 'Recipe does not exist' } });
+                            return validator.response(res, 'error', 403, 'Wrong transaction');
                         })
-                        .catch(error => res.status(500).json({ error: { message: error } }));
+                        .catch(error => validator.response(res, 'error', 500, error));
             }
             return validator.verificationError;
         }
@@ -110,11 +98,11 @@ class RecipesController {
             return models.Recipes.destroy({ where: { id: req.params.id, UserId: req.decoded.id } })
                 .then(destroyed => {
                     if (destroyed) {
-                        res.status(204).json({ success: { status: 'Successfully deleted' } });
+                        return validator.response(res, 'success', 200, 'Successfully deleted');
                     }
-                    res.status(404).json({ error: { message: 'No recipe deleted' } });
+                    return validator.response(res, 'err', 403, 'Wrong transaction');
                 })
-                .catch(error => res.status(500).json({ error: { message: error } }));
+                .catch(error => validator.response(res, 'error', 500, error));
         }
         return validator.invalidParameter;
     }

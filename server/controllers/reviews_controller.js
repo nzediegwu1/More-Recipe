@@ -14,8 +14,8 @@ class Reviews {
                     content: req.body.content,
                     RecipeId: req.params.id,
                 })
-                .then(review => res.status(201).json({ success: { status: review } }))
-                .catch(error => res.status(500).json({ error: { message: error } }));
+                .then(review => validator.response(res, 'success', 201, review))
+                .catch(error => validator.response(res, 'error', 500, error));
             }
             return validator.verificationError;
         }

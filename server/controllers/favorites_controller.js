@@ -11,8 +11,8 @@ class Favorites {
                 UserId: req.decoded.id,
                 RecipeId: req.body.RecipeId,
             })
-            .then(addedFavorite => res.status(201).json({ success: { status: addedFavorite } }))
-            .catch(error => res.status(500).json({ error: { message: error } }));
+            .then(addedFavorite => validator.response(res, 'success', 201, addedFavorite))
+            .catch(error => validator.response(res, 'error', 500, error));
         }
         return validator.verificationError;
     }
@@ -20,12 +20,12 @@ class Favorites {
         // req.params.UserId is mere formality since not to be used for security reasons
         return models.Favorites.findAll({ where: { UserId: req.decoded.id } })
         .then(favoriteRecipes => {
-            if (favoriteRecipes) {
-                res.status(200).json({ success: { status: favoriteRecipes } });
+            if (favoriteRecipes.length !== 0) {
+                return validator.response(res, 'success', 200, favoriteRecipes);
             }
-            res.status(404).json({ error: { message: 'No favorite recipes found' } });
+            return validator.response(res, 'err', 404, 'No favorite recipes found');
         })
-        .catch(error => res.status(500).json({ error: { message: error } }));
+        .catch(error => validator.response(res, 'error', 500, error));
     }
 }
 

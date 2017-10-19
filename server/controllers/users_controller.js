@@ -18,19 +18,19 @@ class Users {
                         for (let item in members) {
                             if (members[item].username === req.body.username || members[item].email === req.body.email) {
                                 // forbidden
-                                res.status(403).json({ error: { message: 'User already exists' } });
+                                return validator.response(res, 'err', 403, 'User already exists');
                             }
                         }
                     }
                     // created
-                    models.Users.create({
+                    return models.Users.create({
                         fullname: req.body.fullname,
                         username: req.body.username,
                         email: req.body.email,
                         password: bcrypt.hashSync(req.body.password, 10) })
-                        .then((createdUser) => res.status(201).json({ success: { status: createdUser } }));
-                })
-                .catch(error => res.status(500).json({ error: { message: error } }));
+                        .then(createdUser => validator.response(res, 'success', 201, createdUser))
+                        .catch(error => validator.response(res, 'error', 500, error));
+                }).catch(error => validator.response(res, 'error', 500, error));
         }
         return validator.validationError;
     }
@@ -43,22 +43,22 @@ class Users {
                     if (bcrypt.compareSync(req.body.password, loggedInUser.password)) {
                         const token = jwt.sign({ id: loggedInUser.id }, key, {
                             expiresIn: 60 * 60 * 24 });
-                        return res.status(202).json({ success: { status: {
+                        return validator.response(res, 'success', 201, {
                             User: loggedInUser,
-                            Token: token } },
+                            Token: token,
                         });
                     }
-                    return res.status(401).json({ error: { message: 'Invalid Login Details' } });
+                    return validator.response(res, 'err', 401, 'Invalid Login Details');
                 })
-                .catch(error => res.status(401).json({ error: { message: 'User not found' } }));
+                .catch(error => validator.response(res, 'err', 401, 'User not found'));
         }
         return validator.validationError;
     }
     getUsers(req, res) {
         // gets all users' details excluding password
         return models.Users.findAll({ attributes: { exclude: ['password'] } })
-            .then(allusers => res.status(200).json({ success: { status: allusers } }))
-            .catch(error => res.status(500).json({ error: { message: error } }));
+            .then(allusers => validator.response(res, 'success', 200, allusers))
+            .catch(error => validator.response(res, 'error', 500, error));
     }
 }
 
