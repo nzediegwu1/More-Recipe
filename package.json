@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "babel": "^6.23.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
@@ -36,7 +35,7 @@
   "scripts": {
     "test": "nyc --reporter=html --reporter=text mocha ./server/tests/ --compilers js:babel-register",
     "start": "nodemon ./server/dist/bin/www.js",
-    "build": "babel ./server/ -d ./server/dist",
+    "build": "babel ./server -d ./server/dist --ignore ./server/dist",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "coveralls": "nyc --reporter=lcov --reporter=text-lcov npm test",
     "postinstall": "npm run build",
