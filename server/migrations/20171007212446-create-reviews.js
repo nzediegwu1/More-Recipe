@@ -8,9 +8,11 @@ module.exports = {
         },
         UserId: {
             type: Sequelize.INTEGER,
+            allowNull: false,
         },
         content: {
             type: Sequelize.TEXT,
+            allowNull: false,
         },
         createdAt: {
             allowNull: false,

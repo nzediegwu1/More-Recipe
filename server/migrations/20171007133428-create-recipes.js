@@ -8,18 +8,25 @@ module.exports = {
         },
         title: {
             type: Sequelize.STRING,
+            allowNull: false,
         },
         ingredients: {
             type: Sequelize.STRING,
+            allowNull: false,
         },
         description: {
             type: Sequelize.TEXT,
+            allowNull: false,
         },
         upvotes: {
             type: Sequelize.INTEGER,
+            allowull: false,
+            defaultValue: 0,
         },
         downvotes: {
             type: Sequelize.INTEGER,
+            allowull: false,
+            defaultValue: 0,
         },
         createdAt: {
             allowNull: false,
