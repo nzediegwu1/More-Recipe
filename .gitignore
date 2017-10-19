@@ -3,3 +3,9 @@
 ################################################################################
 
 /server/.vs
+/.vs
+/Web.config
+/More-Recipe.sln
+/node_modules/.staging
+/node_modules
+/server/dist
