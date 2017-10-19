@@ -69,27 +69,27 @@ class RecipesController {
         // get recipe with same index as parameter and change the value
         const check = validator.confirmParams(req, res);
         const verify = validator.verify(req, res);
-        if (check) {
-            if (validator.success) {
-                return models.Recipes.update({
-                    title: req.body.title,
-                    ingredients: req.body.ingredients,
-                    description: req.body.description,
-                    upvotes: req.body.upvotes,
-                    downvotes: req.body.downvotes,
-                    UserId: req.decoded.id,
-                }, { where: { id: req.params.id, UserId: req.decoded.id } })
-                        .then(updatedRecipe => {
-                            if (updatedRecipe[0] === 1) {
-                                return validator.response(res, 'success', 200, 'Update successful');
-                            }
-                            return validator.response(res, 'error', 403, 'Wrong transaction');
-                        })
-                        .catch(error => validator.response(res, 'error', 500, error));
-            }
+        if (!check) {
+            return validator.invalidParameter;
+        } else if (!validator.success) {
             return validator.verificationError;
         }
-        return validator.invalidParameter;
+        return models.Recipes.update({
+            title: req.body.title,
+            ingredients: req.body.ingredients,
+            description: req.body.description,
+            upvotes: req.body.upvotes,
+            downvotes: req.body.downvotes,
+        }, { where: { id: req.params.id, UserId: req.decoded.id } })
+           .then(updatedRecipe => {
+               if (updatedRecipe[0] === 1) {
+                   return validator.response(res, 'success', 200, 'Update successful');
+               }
+               // trying to update a recipe whose id does not exist
+               // and or which doesnt belong to the user
+               return validator.response(res, 'error', 403, 'Wrong transaction');
+           })
+           .catch(error => validator.response(res, 'error', 500, error));
     }
     deleteRecipe(req, res) {
         // get recipe where index is same as id parameter and delete

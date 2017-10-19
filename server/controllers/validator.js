@@ -4,7 +4,7 @@
         this.invalidParameter = {};
         this.verificationError = {};
         this.success = false;
-        this.errorMessage = (msg, res) => res.status(400).json({ error: { message: msg } });
+        this.errorMessage = (msg, res) => this.response(res, 'err', 400, msg);
         this.verify = (req, res, context) => {
             switch (this.model) {
                 case 'users':
@@ -125,7 +125,7 @@
             if (status === 'success') {
                 return res.status(statusCode).json({ success: { status: value } });
             }
-            return res.status(statusCode).json({ success: { message: value } });
+            return res.status(statusCode).json({ error: { message: value } });
         };
     }
 }
