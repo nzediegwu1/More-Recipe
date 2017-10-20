@@ -1,10 +1,14 @@
 ﻿import app from '../app';
 import models from '../models';
+import * as http from 'http';
 
-const port = process.env.PORT || 3000;
+
+const port = parseInt(process.env.PORT, 10) || 8000;
+app.set('port', port);
+const server = http.createServer(app);
+
 
 models.sequelize.sync().then(() => {
-    const server = app.listen(port, () => {
-        console.log(`Express Server Listening on Port  ${server.address().port}`);
-    });
+    server.listen(port);
+    console.log(`Server is up @ ${port}`);
 });
