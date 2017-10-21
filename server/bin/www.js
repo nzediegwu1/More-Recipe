@@ -1,7 +1,7 @@
 ﻿import app from '../app';
 import models from '../models';
 import * as http from 'http';
-import 'dotenv';
+require('dotenv').config();
 
 
 const port = process.env.PORT || 8080;
