@@ -1,14 +1,14 @@
 ﻿import app from '../app';
 import models from '../models';
 import * as http from 'http';
+import 'dotenv';
 
 
-const port = parseInt(process.env.PORT, 10) || 8000;
-app.set('port', port);
+const port = process.env.PORT || 8080;
 const server = http.createServer(app);
 
 
 models.sequelize.sync().then(() => {
     server.listen(port);
-    console.log(`Server is up @ ${port}`);
+    console.log(`Server is up at ${port}`);
 });
