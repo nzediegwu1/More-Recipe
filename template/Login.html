@@ -15,6 +15,15 @@
             background-size: cover;
             background-color: lightgreen;
         }
+
+        .collapsible {
+            background-color: #28a745;
+        }
+        @media only screen and (max-width: 574px) {
+            .collapsible {
+                border-top: ridge;
+            }
+        }
     </style>
 </head>
 <body class="background-image">
@@ -67,7 +76,7 @@
             <div class="modal fade" id="resetPassword" tabindex="-1" role="dialog" aria-labelledby="resetPasswordLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <div class="modal-header text-center modal-theme">
+                        <div class="modal-header modal-theme">
                             <h5 class="modal-title" id="resetPasswordLabel">Recover Password</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
