@@ -2,7 +2,7 @@
 import bcrypt from 'bcryptjs';
 import models from '../models';
 require('dotenv').config();
-import val from './validator';
+import val from '../middleware/validator';
 
 const key = process.env.SECRET_KEY;
 const validator = new val('users');

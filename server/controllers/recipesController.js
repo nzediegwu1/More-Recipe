@@ -1,5 +1,5 @@
 ﻿import models from '../models';
-import val from './validator';
+import val from '../middleware/validator';
 
 const validator = new val('recipes');
 class RecipesController {
